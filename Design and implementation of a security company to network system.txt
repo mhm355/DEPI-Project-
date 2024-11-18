@@ -1,0 +1,1074 @@
+task 1 
+
+task 2 basic settings 
+
+core switches
+en
+conf t
+line con 0
+pass DEPI-G3-core
+login
+line vty 0 15
+pass DEPI-G3-core
+login
+exec-timeout 3 0
+logging synchronous
+enable pass DEPI-G3-core
+banner motd $NO UNAUTHORISED ACCESS !!!$
+no ip domain-lookup
+service password-encryption
+do wr
+
+other switches
+en
+conf t
+line con 0
+pass DEPI-G3-sw
+login
+line vty 0 15
+pass DEPI-G3-sw
+login
+exec-timeout 3 0
+logging synchronous
+enable pass DEPI-G3-sw
+banner motd $NO UNAUTHORISED ACCESS !!!$
+no ip domain-lookup
+service password-encryption
+do wr
+
+
+
+
+
+
+task(3)-->Configure VLANs (IDs: 10, 20, 50, 70, 199).
+FLOOR1-MK:-
+vlan 10
+name Mgt
+vlan 20
+name LAN
+vlan 50
+name WLAN
+vlan 70
+name VOIP
+vlan 199
+name Blackhole
+interface range f0/1-2
+switchport mode access 
+switchport access vlan 20
+no shutdown
+interface range f0/5-6
+switchport mode access 
+switchport access vlan 70
+no shutdown
+interface f0/10
+switchport mode access 
+switchport access vlan 50
+no shutdown
+interface range f0/3-4,f0/7-9,f0/11-24
+switchport mode access 
+switchport access vlan 199
+shutdown
+FLOOR1-HR:-
+vlan 10
+name Mgt
+vlan 20
+name LAN
+vlan 50
+name WLAN
+vlan 70
+name VOIP
+vlan 199
+name Blackhole
+interface range f0/1-2
+switchport mode access 
+switchport access vlan 20
+no shutdown
+interface range f0/5-6
+switchport mode access 
+switchport access vlan 70
+no shutdown
+interface f0/10
+switchport mode access 
+switchport access vlan 50
+no shutdown
+interface range f0/3-4,f0/7-9,f0/11-24
+switchport mode access 
+switchport access vlan 199
+shutdown
+FLOOR2-FIN:-
+vlan 10
+name Mgt
+vlan 20
+name LAN
+vlan 50
+name WLAN
+vlan 70
+name VOIP
+vlan 199
+name Blackhole
+interface range f0/1-2
+switchport mode access 
+switchport access vlan 20
+no shutdown
+interface range f0/5-6
+switchport mode access 
+switchport access vlan 70
+no shutdown
+interface f0/10
+switchport mode access 
+switchport access vlan 50
+no shutdown
+interface range f0/3-4,f0/7-9,f0/11-24
+switchport mode access 
+switchport access vlan 199
+shutdown
+FLOOR2-ADM:-
+vlan 10
+name Mgt
+vlan 20
+name LAN
+vlan 50
+name WLAN
+vlan 70
+name VOIP
+vlan 199
+name Blackhole
+interface range f0/1-2
+switchport mode access 
+switchport access vlan 20
+no shutdown
+interface range f0/5-6
+switchport mode access 
+switchport access vlan 70
+no shutdown
+interface f0/10
+switchport mode access 
+switchport access vlan 50
+no shutdown
+interface range f0/3-4,f0/7-9,f0/11-24
+switchport mode access 
+switchport access vlan 199
+shutdown
+FLOOR3-ITC:-
+vlan 10
+name Mgt
+vlan 20
+name LAN
+vlan 50
+name WLAN
+vlan 70
+name VOIP
+vlan 199
+name Blackhole
+interface range f0/1-2
+switchport mode access 
+switchport access vlan 20
+no shutdown
+interface range f0/5-6
+switchport mode access 
+switchport access vlan 70
+no shutdown
+interface f0/10
+switchport mode access 
+switchport access vlan 50
+no shutdown
+interface range f0/3-4,f0/7-9,f0/11-24
+switchport mode access 
+switchport access vlan 199
+shutdown
+FLOOR3-Services:-
+vlan 10
+name Mgt
+vlan 20
+name LAN
+vlan 50
+name WLAN
+vlan 70
+name VOIP
+vlan 90
+name INSIDSERVERS
+interface range f0/1-3
+switchport mode access 
+switchport access vlan 90
+no shutdown
+interface f0/4
+switchport mode access 
+switchport access vlan 50
+no shutdown
+Core-Sw1:-
+vlan 10
+name Mgt
+vlan 20
+name LAN
+vlan 50
+name WLAN
+vlan 70
+name VOIP
+vlan 199
+name Blackhole
+Core-Sw2:-
+vlan 10
+name Mgt
+vlan 20
+name LAN
+vlan 50
+name WLAN
+vlan 70
+name VOIP
+vlan 199
+name Blackhole
+
+
+
+task 4"Configure EtherChannel using LACP and implement STP PortFast and BPDUguard."
+
+()#spanning-tree portfast
+()#spanning-tree bpduguard enable
+any intarface connected to end divices 
+الإعدادات المتقدمة والتحسينات
+استخدام أوامر مثل spanning-tree portfast edge مع bpduguard و bpdufilter على البورتات المتصلة بالأجهزة النهائية لتعزيز الأمان.
+we cannt use that "paket tracer" are lemeted .
+
+spanning-tree mode rapid-pvst
+use the command on all switches 
+
+      on core switches
+cor-Switch1(config)# spanning-tree vlan 10 priority 4096
+cor-Switch1(config)# spanning-tree vlan 20 priority 4096
+cor-Switch1(config)# spanning-tree vlan 1 priority 4096
+
+cor-Switch2(config)# spanning-tree vlan 10 priority 8192
+cor-Switch2(config)# spanning-tree vlan 20 priority 8192
+cor-Switch2(config)# spanning-tree vlan 1 priority 8192
+
+cor-Switch2(config)# spanning-tree vlan 50 priority 4096
+cor-Switch2(config)# spanning-tree vlan 70 priority 4096
+cor-Switch2(config)# spanning-tree vlan 199 priority 4096
+
+
+cor-Switch1(config)# spanning-tree vlan 50 priority 8192
+cor-Switch1(config)# spanning-tree vlan 70 priority 8192
+cor-Switch1(config)# spanning-tree vlan 199 priority 8192
+
+spanning-tree guard root
+no all interface that connect to any switch in layer access 
+
+Configure EtherChannel using LACP
+cor-sw1
+int r g1/0/8-10
+channel-group 1 mode active 
+int port-channel 1
+switchport mode trunk 
+core-sw1(-if)switchport trunk allowed vlan 1,10,20,50,70,199
+int range g1/0/1-6
+switchport mode trunk 
+switchport trunk native vlan 10
+core-sw1(-if)switchport trunk allowed vlan 1,10,20,50,70,199
+
+cor-sw2
+int r g1/0/8-10
+channel-group 1 mode pasive 
+int port-channel 1
+switchport mode trunk 
+core-sw1(-if)switchport trunk allowed vlan 1,10,20,50,70,199
+int range g1/0/1-6
+switchport mode trunk 
+switchport trunk native vlan 10
+core-sw1(-if)switchport trunk allowed vlan 1,10,20,50,70,199
+
+
+on all switches that access 
+int range g0/1-2
+switchport mode trunk 
+switchport trunk native vlan 10
+switchport trunk allowed vlan 1,10,20,50,70,199
+
+
+
+
+task5 => Test basic connectivity andperform initial troubleshooting.
+coomands used in task5:-
+#show run
+#show interfaces
+#show interfaces status
+#show vlan brief
+#show interfaces trunk
+#show interfaces switchport
+
+
+
+
+
+
+task(6)-->Set up Inter-VLAN Routing on the Multilayer Switch.
+Core-Sw1:-
+Core-Sw1(config)#no ip domain lookup
+Core-Sw1(config)#line con 0
+Core-Sw1(config-line)#exec-timeout 3 0
+Core-Sw1(config-line)#logging synchronous
+Core-Sw1(config-line)#exit 
+Core-Sw1(config)#ip routing
+Core-Sw1(config)#ipv6 unicast-routing 
+Core-Sw1(config)#interface gigabitEthernet1/0/23
+Core-Sw1(config-if)#no switchport 
+Core-Sw1(config-if)#ip address 10.2.2.1 255.255.255.252 
+Core-Sw1(config-if)#ipv6 address 2001:db8:acad:a::1/64
+Core-Sw1(config-if)#ipv6 address fe80::1 link-local 
+Core-Sw1(config-if)#exit
+Core-Sw1(config-if)#interface gigabitEthernet1/0/24
+Core-Sw1(config-if)#no switchport
+Core-Sw1(config-if)#ip address 10.2.2.5 255.255.255.252
+Core-Sw1(config-if)#ipv6 address 2001:db8:acad:b::1/64
+Core-Sw1(config-if)#ipv6 address fe80::1 link-local
+Core-Sw1(config-if)#exit
+Core-Sw1(config)#interface vlan 10
+Core-Sw1(config-if)#ip address 192.168.10.1 255.255.255.0
+Core-Sw1(config-if)#ipv6 address 2001:db8:acad:10::1/64
+Core-Sw1(config-if)#ipv6 address fe80::10:1 link-local
+Core-Sw1(config-if)#no shutdown 
+Core-Sw1(config-if)#exit
+Core-Sw1(config)#interface vlan 50
+Core-Sw1(config-if)#ip address 10.20.50.1 255.255.0.0
+Core-Sw1(config-if)#ipv6 address 2001:db8:acad:50::1/64
+Core-Sw1(config-if)#ipv6 address fe80::50:1 link-local
+Core-Sw1(config-if)#no shutdown 
+Core-Sw1(config-if)#exit
+Core-Sw1(config)#interface vlan 20
+Core-Sw1(config-if)#ip address 172.16.20.1 255.255.0.0
+Core-Sw1(config-if)#ipv6 address 2001:db8:acad:20::1/64
+Core-Sw1(config-if)#ipv6 address fe80::20:1 link-local
+Core-Sw1(config-if)#no shutdown 
+Core-Sw1(config-if)#exit
+Core-Sw1(config)#interface vlan 70
+Core-Sw1(config-if)#ip address 172.30.70.1 255.255.0.0
+Core-Sw1(config-if)#ipv6 address 2001:db8:acad:70::1/64
+Core-Sw1(config-if)#ipv6 address fe80::70:1 link-local
+Core-Sw1(config-if)#no shutdown 
+Core-Sw1(config-if)#exit 
+
+Core-Sw2:-
+Core-Sw2(config)#no ip domain lookup 
+Core-Sw2(config)#line con 0
+Core-Sw2(config-line)#exec-timeout 3 0
+Core-Sw2(config-line)#logging synchronous 
+Core-Sw2(config-line)#exit 
+Core-Sw2(config)#ip routing
+Core-Sw2(config)#ipv6 unicast-routing
+Core-Sw2(config-if)#interface gigabitEthernet 1/0/23
+Core-Sw2(config-if)#no switchport 
+Core-Sw2(config-if)#ip address 10.2.2.9 255.255.255.252
+Core-Sw2(config-if)#ipv6 address 2001:db8:acad:c::1/64
+Core-Sw2(config-if)#ipv6 address fe80::1 link-local
+Core-Sw2(config-if)#exit
+Core-Sw2(config-if)#interface gigabitEthernet 1/0/24
+Core-Sw2(config-if)#no switchport 
+Core-Sw2(config-if)#ip address 10.2.2.13 255.255.255.252
+Core-Sw2(config-if)#ipv6 address 2001:db8:acad:d::1/64
+Core-Sw2(config-if)#ipv6 address fe80::1 link-local
+Core-Sw1(config-if)#exit
+Core-Sw2(config)#interface vlan 10
+Core-Sw2(config-if)#ip address 192.168.10.2 255.255.255.0
+Core-Sw2(config-if)#ipv6 address 2001:db8:acad:10::2/64
+Core-Sw2(config-if)#ipv6 address fe80::10:2 link-local
+Core-Sw2(config-if)#no shutdown
+Core-Sw2(config-if)#exit
+Core-Sw2(config)#interface vlan 20
+Core-Sw2(config-if)#ip address 172.16.20.2 255.255.0.0
+Core-Sw2(config-if)#ipv6 address 2001:db8:acad:20::2/64
+Core-Sw2(config-if)#ipv6 address fe80::20:2 link-local
+Core-Sw2(config-if)#no shutdown
+Core-Sw2(config-if)#exit
+Core-Sw2(config-if)#interface vlan 50
+Core-Sw2(config-if)#ip address 10.20.50.2 255.255.0.0
+Core-Sw2(config-if)#ipv6 address 2001:db8:acad:50::2/64
+Core-Sw2(config-if)#ipv6 address fe80::50:2 link-local
+Core-Sw2(config-if)#no shutdown
+Core-Sw2(config-if)#exit
+Core-Sw2(config-if)#interface vlan 70
+Core-Sw2(config-if)#ip address 172.30.70.2 255.255.0.0
+Core-Sw2(config-if)#ipv6 address 2001:db8:acad:70::2/64
+Core-Sw2(config-if)#ipv6 address fe80::70:2 link-local
+Core-Sw2(config-if)#no shutdown
+Core-Sw2(config-if)#exit
+
+
+
+
+
+
+tasl 7- Configure the core switch IP addressing and routing functionalities. 
+don in task 6 by eng3!
+edit exil and add ip , int vlans.
+
+
+
+
+task 8
+
+
+Core-Sw1
+
+en
+conf t
+interface vlan 10
+no shutdown
+ip helper-address 10.11.11.38
+
+interface vlan 20
+no shutdown
+ip helper-address 10.11.11.38
+
+
+interface vlan 50
+no shutdown
+ip helper-address 10.11.11.38
+exit
+
+
+Core-Sw2
+
+en
+conf t
+interface vlan 10
+no shutdown
+ip helper-address 10.11.11.38
+
+interface vlan 20
+no shutdown
+ip helper-address 10.11.11.38
+
+
+interface vlan 50
+no shutdown
+ip helper-address 10.11.11.38
+exit
+
+edit by khaled.
+#server-sw
+int r f0/1-3
+spaning-tree portfast
+#DHCP 
+default getway 172.16.0.1 for LAN network
+creat vlan 90 on all switches 
+allawd vlan 90 by all interface trunk on any switches
+#core-sw 1
+spanning-terr vlan 90 priorty 4096
+int vlan 90
+ip add 10.11.11.33/27
+no shutdown
+#core-sw2 
+spanning-terr vlan 90 priorty 8192
+int vlan 90
+ip add 10.11.11.34/27
+no shutdown
+
+
+task(9)-->Implement HSRP for redundancy, load balancing, and failover.
+Core-Sw1:-
+interface vlan 10
+standby 1 ip 192.168.10.254
+standby 1 priority 110
+standby 1 preempt
+standby 1 timers 2 5
+interface vlan 20
+standby 2 ip 172.16.20.254
+standby 2 priority 110
+standby 2 preempt
+standby 2 timers 2 5
+interface vlan 50
+standby 3 ip 10.20.50.254
+standby 3 priority 110
+standby 3 preempt
+standby 3 timers 2 5
+interface vlan 70
+standby 4 ip 172.30.70.254 
+standby 4 priority 110
+standby 4 preempt
+standby 4 timers 2 5
+interface vlan 90
+standby 5 ip  10.11.11.35
+standby 5 priority 110
+standby 5 preempt
+standby 5 timers 2 5
+  
+Core-Sw2:-
+interface vlan 10
+standby 1 ip 192.168.10.254
+standby 1 priority 90
+standby 1 timers 2 5
+interface vlan 20
+standby 2 ip 172.16.20.254
+standby 2 priority 90
+standby 2 timers 2 5
+interface vlan 50
+standby 3 ip 10.20.50.254
+standby 3 priority 90
+standby 3 timers 2 5
+interface vlan 70
+standby 4 ip 172.30.70.254 
+standby 4 priority 90
+standby 4 timers 2 5
+interface vlan 90
+standby 5 ip  10.11.11.35
+standby 5 priority 90
+standby 5 timers 2 5
+
+
+10 Perform testing for redundancy and failover mechanisms. 
+core-sw1 > root for all interface vlan 
+int vlan 20 > ip add 172.16.0.1
+
+delet standby and creat from scratch
+core-sw1
+interface vlan 10
+no standby 1 ip 192.168.10.254
+no standby 1 priority 110
+no standby 1 preempt
+no standby 1 timers 2 5
+interface vlan 20
+no standby 2 ip 172.16.20.254
+no standby 2 priority 110
+no standby 2 preempt
+no standby 2 timers 2 5
+interface vlan 50
+no standby 3 ip 10.20.50.254
+no standby 3 priority 110
+no standby 3 preempt
+no standby 3 timers 2 5
+interface vlan 70
+no standby 4 ip 172.30.70.254 
+no standby 4 priority 110
+no standby 4 preempt
+no standby 4 timers 2 5
+interface vlan 90
+no standby 5 ip  10.11.11.35
+no standby 5 priority 110
+no standby 5 preempt
+no standby 5 timers 2 5
+
+core-sw2
+
+
+interface vlan 10
+no standby 1 ip 192.168.10.254
+no standby 1 priority 90
+no standby 1 preempt
+no standby 1 timers 2 5
+interface vlan 20
+no standby 2 ip 172.16.20.254
+no standby 2 priority 90
+no standby 2 preempt
+no standby 2 timers 2 5
+interface vlan 50
+no standby 3 ip 10.20.50.254
+no standby 3 priority 90
+no standby 3 preempt
+no standby 3 timers 2 5
+interface vlan 70
+no standby 4 ip 172.30.70.254 
+no standby 4 priority 90
+no standby 4 preempt
+no standby 4 timers 2 5
+interface vlan 90
+no standby 5 ip  10.11.11.35
+no standby 5 priority 90
+no standby 5 preempt
+no standby 5 timers 2 5
+
+
+core-sw1
+
+interface vlan 10
+ip add 192.168.10.1 255.255.255.0
+standby 1 ip 192.168.10.254
+standby 1 priority 110
+standby 1 preempt
+standby 1 timers 2 5
+interface vlan 20
+ip add 172.16.20.1 255.255.0.0
+standby 2 ip 172.16.20.254
+standby 2 priority 110
+standby 2 preempt
+standby 2 timers 2 5
+interface vlan 50
+ip add 10.20.50.1 255.255.0.0
+standby 3 ip 10.20.50.254
+standby 3 priority 110
+standby 3 preempt
+standby 3 timers 2 5
+interface vlan 70
+ip add 192.168.70.1 255.255.0.0
+standby 4 ip 172.30.70.254 
+standby 4 priority 110
+standby 4 preempt
+standby 4 timers 2 5
+interface vlan 90
+ip add 10.11.11.33 255.255.255.224
+standby 5 ip  10.11.11.35
+standby 5 priority 110
+standby 5 preempt
+standby 5 timers 2 5
+
+
+Interface   Grp  Pri P State    Active          Standby         Virtual IP
+Vl10        1    110 P Active   local           192.168.10.2    192.168.10.254 
+Vl20        2    110 P Active   local           172.16.20.2     172.16.20.254  
+Vl50        3    110 P Active   local           10.20.50.2      10.20.50.254   
+Vl70        4    110 P Active   local           172.30.70.2     172.30.70.254  
+Vl90        5    110 P Active   local           10.11.11.34     10.11.11.35 
+
+core-sw2
+
+interface vlan 10
+standby 1 ip 192.168.10.254
+standby 1 priority 90
+no standby 1 timers 2 5
+interface vlan 20
+standby 2 ip 172.16.20.254
+standby 2 priority 90
+no standby 2 timers 2 5
+interface vlan 50
+standby 3 ip 10.20.50.254
+standby 3 priority 90
+no standby 3 timers 2 5
+interface vlan 70
+standby 4 ip 172.30.70.254 
+standby 4 priority 90
+no standby 4 timers 2 5
+interface vlan 90
+standby 5 ip  10.11.11.35
+standby 5 priority 90
+no standby 5 timers 2 5
+
+## the defultgitway for any device is .254 the end valide ip from any ring 
+dont use the command on two L3 "standby 5 preempt"  use in core-sw1 only.
+dont edit standby timers the default is 3 10.
+## test SHRP is stabul after cheng seting , the core-sw1 is activ any time is running , core-sw2 is standby for core-sw1.
+## core-sw1 is root bridg for all vlan by priorty 4096
+## core-sw2 is root bridg for all vlan by priorty 8192
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+1-enable password DEPI-G3
+2-usernamme admin password DEPI-G3
+
+
+
+#
+*firewall interfaces security zones and levels
+#1-ASA1
+in g1/2
+no shut
+ip add 10.2.2.2 255.255.255.252
+nameif INSIDE1
+security-level 100
+exit
+
+in g1/3
+no shut
+ip add 10.2.2.10 255.255.255.252
+nameif INSIDE2
+security-level 100
+exit
+
+in g1/1
+no shut
+ip add 10.11.11.1 255.255.255.224
+nameif DMZ
+security-level 70
+exit
+
+in g1/4
+no shut
+ip add 105.100.50.2 255.255.255.252
+nameif OUTSIDE1
+security-level 0
+exit
+
+in g1/5
+no shut
+ip add 197.200.100.2 255.255.255.252
+nameif OUTSIDE2
+security-level 0
+exit
+wr mem
+#
+#2-ASA2
+
+in g1/2
+no shut
+ip add 10.2.2.6 255.255.255.252
+nameif INSIDE1
+security-level 100
+exit
+
+in g1/3
+no shut
+ip add 10.2.2.14 255.255.255.252
+nameif INSIDE2
+security-level 100
+exit
+
+
+in g1/4
+no shut
+ip add 105.100.50.6 255.255.255.252
+nameif OUTSIDE1
+security-level 0
+exit
+
+in g1/5
+no shut
+ip add 197.200.100.6 255.255.255.252
+nameif OUTSIDE2
+security-level 0
+exit
+ wr mem
+#
+
+*firewall routing- ospf +static route
+1-ASA1
+#
+route OUTSIDE1 0.0.0.0 0.0.0.0 105.100.50.1
+route OUTSIDE2 0.0.0.0 0.0.0.0 197.200.100.1 70  ---backup---
+ router ospf 35
+router-id 1.1.0.0
+network 105.100.50.0 255.255.255.252 area 0
+network 197.200.100.0 255.255.255.252 area 0
+network 10.2.2.0 255.255.255.252 area 0
+network 10.2.2.8 255.255.255.252 area 0
+exit
+
+we mem
+#
+#2-ASA2
+route OUTSIDE1 0.0.0.0 0.0.0.0 105.100.50.5 
+route OUTSIDE2 0.0.0.0 0.0.0.0 197.200.100.5 
+router ospf 35
+router-id 1.1.9.9
+network 197.200.100.4 255.255.255.252 area 0
+network 105.100.50.4 255.255.255.252 area 0
+network 10.2.2.4 255.255.255.252 area 0
+network 10.2.2.12 255.255.255.252 area 0
+exit
+wr mem
+
+#
+*firewall inspection policy configuration
+
+#1-ASA1
+object network INSIDE1-OUTSIDE1
+subnet 172.16.0.0 255.255.0.0
+nat (INSIDE1,OUTSIDE1) dynamic interface
+
+object network INSIDE2-OUTSIDE1
+subnet 172.16.0.0 255.255.0.0
+nat (INSIDE2,OUTSIDE1) dynamic interface
+
+object network INSIDEw1-OUTSIDEw1
+subnet 10.20.0.0 255.255.0.0
+nat (INSIDE1,OUTSIDE1) dynamic interface
+
+object network INSIDEw2-OUTSIDEw1
+subnet 10.20.0.0 255.255.0.0
+nat (INSIDE2,OUTSIDE1) dynamic interface
+
+object network INSIDE1-OUTSIDE2
+subnet 172.16.0.0 255.255.0.0
+nat (INSIDE1,OUTSIDE2) dynamic interface
+
+object network INSIDE2-OUTSIDE2
+subnet 172.16.0.0 255.255.0.0
+nat (INSIDE2,OUTSIDE2) dynamic interface
+
+
+object network INSIDEw1-OUTSIDEw2
+subnet 10.20.0.0 255.255.0.0
+nat (INSIDE1,OUTSIDE2) dynamic interface
+
+object network INSIDEw2-OUTSIDEw2
+subnet 10.20.0.0 255.255.0.0
+nat (INSIDE2,OUTSIDE2) dynamic interface
+
+
+object network DMZ-OUTSIDE1
+subnet 10.11.11.0 255.255.255.224
+nat (DMZ,OUTSIDE1) dynamic interface
+
+object network DMZ-OUTSIDE2
+subnet 10.11.11.0 255.255.255.224
+nat (DMZ,OUTSIDE2) dynamic interface
+
+wr mem
+#
+#2-ASA2
+object network INSIDE1-OUTSIDE1
+subnet 172.16.0.0 255.255.0.0
+nat (INSIDE1,OUTSIDE1) dynamic interface
+
+object network INSIDE2-OUTSIDE1
+subnet 172.16.0.0 255.255.0.0
+nat (INSIDE2,OUTSIDE1) dynamic interface
+
+object network INSIDEw1-OUTSIDEw1
+subnet 10.20.0.0 255.255.0.0
+nat (INSIDE1,OUTSIDE1) dynamic interface
+
+object network INSIDEw2-OUTSIDEw1
+subnet 10.20.0.0 255.255.0.0
+nat (INSIDE2,OUTSIDE1) dynamic interface
+
+object network INSIDE1-OUTSIDE2
+subnet 172.16.0.0 255.255.0.0
+nat (INSIDE1,OUTSIDE2) dynamic interface
+
+object network INSIDE2-OUTSIDE2
+subnet 172.16.0.0 255.255.0.0
+nat (INSIDE2,OUTSIDE2) dynamic interface
+
+object network INSIDEw1-OUTSIDEw2
+subnet 10.20.0.0 255.255.0.0
+nat (INSIDE1,OUTSIDE2) dynamic interface
+
+object network INSIDEw2-OUTSIDEw2
+subnet 10.20.0.0 255.255.0.0
+nat (INSIDE2,OUTSIDE2) dynamic interface
+
+wr mem
+#
+      
+
+## task 13 : Configure VoIP setup by deploying IP phones. 
+router ,
+set ip address on sub interface f0/0.70 
+encapsulation dot1Q 
+ip add : 172.30.0.1 255.255.0.0
+creat dhcp , name dhcp voic , network 172.30.0.0 255.255.0.0
+option 150 1p 172.30.0.1
+Router2(config)#telephony-service 
+Router2(config-telephony)#max-dn 10
+Router2(config-telephony)#max-ephones 10
+Router2(config-telephony)#ip source-address 172.30.0.1 port 2000 
+swSEr
+FLOOR3-Services(config-if)#int f0/24 
+FLOOR3-Services(config-if)#switchport mode trunk
+sw 
+under switch that have ip phone
+(config-if-range)#no switchport access vlan 70
+(config-if-range)#switchport voice vlan 70
+
+
+## task 14 set up sandard acl for ssh access
+
+ASA1
+
+access-list RES extended permit icmp any any
+access-list RES extended permit tcp any any eq 80
+access-list RES extended permit tcp any any eq 53
+access-list RES extended permit udp any any eq 53
+
+access-group RES in interface DMZ
+access-group RES in interface OUTSIDE1
+access-group RES in interface OUTSIDE2
+
+do wr
+
+
+ASA2
+
+access-list RES extended permit icmp any any
+access-list RES extended permit tcp any any eq 80
+access-list RES extended permit tcp any any eq 53
+access-list RES extended permit udp any any eq 53
+
+access-group RES in interface OUTSIDE1
+access-group RES in interface OUTSIDE2
+
+do wr
+
+
+#ssh#
+switches-->
+username admin password DEPI-G3-sw
+ip domain-name DEPI.com
+crypto key generate rsa general-keys modulus 1024
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+exit
+access-list 1 permit 192.168.10.0 0.0.0.255
+access-list 1 deny any
+line vty 0 15
+access-class 1 in
+exit
+do wr
+MK-switch-->
+FLOOR1-MK(config)#interface vlan 10
+FLOOR1-MK(config-if)#ip address 192.168.10.2 255.255.255.0
+FLOOR1-MK(config-if)#no shutdown 
+HR-switch-->
+FLOOR1-HR(config)#interface vlan 10
+FLOOR1-HR(config-if)#ip address 192.168.10.3 255.255.255.0
+FLOOR1-HR(config-if)#no shutdown
+FIN-switch-->
+FLOOR2-FIN(config)#interface vlan 10
+FLOOR2-FIN(config-if)#ip address 192.168.10.4 255.255.255.0
+FLOOR2-FIN(config-if)#no shutdown
+ADM-switch-->
+FLOOR2-ADM(config)#interface vlan 10
+FLOOR2-ADM(config-if)#ip address 192.168.10.5 255.255.255.0
+FLOOR2-ADM(config-if)#no shutdown
+ITC-switch-->
+FLOOR3-ITC(config)#interface vlan 10
+FLOOR3-ITC(config-if)#ip address 192.168.10.6 255.255.255.0
+FLOOR3-ITC(config-if)#no shutdown 
+SERVICES-sw-->
+FLOOR3-Services(config)#interface vlan 10
+FLOOR3-Services(config-if)#ip address 192.168.10.7 255.255.255.0
+FLOOR3-Services(config-if)#no shutdown
+
+core switches-->
+username admin password DEPI-G3-core
+ip domain-name DEPI.com
+crypto key generate rsa general-keys modulus 1024
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+exit
+access-list 1 permit 192.168.10.0 0.0.0.255
+access-list 1 deny any
+line vty 0 15
+access-class 1 in
+exit
+do wr
+
+
+## 16 >> Establish connectivity with the Airtel ISP Router. 
+
+TE-ISP >> int g0/0 >> ip add 20.20.20.1 255.255.255.252
+ip route 8.0.0.0 255.0.0.0 20.20.20.2
+E&-ISP >> int g0/0 >> ip add 30.30.30.1 255.255.255.252
+ip route 8.0.0.0 255.0.0.0 30.30.30.2
+routerOnInternet
+>> int g0/1 >> ip add 20.20.20.2 255.255.255.252
+>> int g0/2 >> ip add 30.30.30.2 255.255.255.252
+>> int g0/0 >> ip add 8.0.0.1 255.0.0.0
+Router(config)#ip route 0.0.0.0 0.0.0.0 20.20.20.1 
+Router(config)#ip route 0.0.0.0 0.0.0.0 30.30.30.1 5
+
+
+
+task 17 implement OSPF as the routing protocol
+
+
+
+CORE-SW 1
+
+en
+conf t
+router ospf 35
+router-id 1.1.1.1
+network 10.2.2.0 0.0.0.3 area 0
+network 10.2.2.4 0.0.0.3 area 0
+network 192.168.10.0 0.0.0.255 area 0
+network 172.16.0.0 0.0.255.255 area 0
+network 10.20.0.0 0.0.255.255 area 0
+network 10.11.11.32 0.0.0.31 area 0
+do wr
+
+CORE-SW 2
+
+en
+conf t
+router ospf 35
+router-id 1.1.2.2
+network 10.2.2.8 0.0.0.3 area 0
+network 10.2.2.12 0.0.0.3 area 0
+network 192.168.10.0 0.0.0.255 area 0
+network 172.16.0.0 0.0.255.255 area 0
+network 10.20.0.0 0.0.255.255 area 0
+network 10.11.11.32 0.0.0.31 area 0
+do wr
+
+
+TE-ISP
+
+en
+conf t
+router ospf 35
+router-id 1.1.3.3
+network 105.100.50.0 0.0.0.3 area 0
+network 105.100.50.4 0.0.0.3 area 0
+network 20.20.20.0 0.0.0.3 area 0
+do wr
+
+
+e&-isp
+
+en
+conf t
+router ospf 35
+router-id 1.1.4.4
+network 197.200.100.0 0.0.0.3 area 0
+network 197.200.100.4 0.0.0.3 area 0
+network 30.30.30.0 0.0.0.3 area 0
+do wr
+
+task(18)--->Configure the Wireless LAN Controller (WLC) and deploy Wireless Access Points (WAPs).
+username-->admin
+password-->DEPI-G3-w
+SSID--> EMPLOTEES - AUOITROS - CORPORATE - GUEST
+
+
+
+
+==============================================================================================================
+int r f0/1-2,f0/5-6
+switchport port-security
+switchport port-security maximum 2
+
+
+------------------------------------------------------------------
+NAT--->
+
+TE-ISP-->
+TE-ISP(config)#interface g0/1
+TE-ISP(config-if)#ip nat inside 
+TE-ISP(config-if)#interface g0/2
+TE-ISP(config-if)#ip nat inside 
+TE-ISP(config-if)#interface g0/0
+TE-ISP(config-if)#ip nat outside 
+TE-ISP(config-if)#exit
+TE-ISP(config)#access-list 10 permit 105.100.50.0 0.0.0.3
+TE-ISP(config)#access-list 10 permit 105.100.50.4 0.0.0.3
+TE-ISP(config)#ip nat inside source list 10 interface g0/0 overload
+
+
+e&-isp-->
+e&-isp(config)#interface g0/1
+e&-isp(config-if)#ip nat inside 
+e&-isp(config-if)#interface g0/2
+e&-isp(config-if)#ip nat inside 
+e&-isp(config-if)#interface g0/0
+e&-isp(config-if)#ip nat outside 
+e&-isp(config-if)#exit
+e&-isp(config)#access-list 10 permit 197.200.100.0 0.0.0.3
+e&-isp(config)#access-list 10 permit 197.200.100.4 0.0.0.3
+e&-isp(config)#ip nat inside source list 10 interface g0/0 overload
+
+
